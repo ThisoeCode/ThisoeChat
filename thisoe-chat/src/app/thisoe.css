@@ -1,0 +1,46 @@
+:root{
+  /* colors */
+  --thisoe:#178577;
+  --background:#fefefe;
+  --foreground:#171717;
+}
+
+html,body{margin:0;padding:0}
+i,button,a,p{all:unset}
+i{display:flex}
+button{cursor:pointer}
+
+*::selection{
+  background:var(--thisoe);
+  color:#cef;
+  text-shadow: 1px 1px #335;
+}
+::-webkit-scrollbar{width:8pt}
+::-webkit-scrollbar-track{background-color:#222}
+::-webkit-scrollbar-thumb{
+  background-color:var(--thisoe);
+  border-radius:9pt;
+  transition:background-color .2s ease;
+}
+::-webkit-scrollbar-thumb:hover{background-color:#399}
+
+
+
+
+
+
+/*******   PHONE   *******/
+
+@media only screen and (max-width: 539px) {
+
+}
+
+/*******   DARK   *******/
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --darkthisoe:aquamarine;
+    --background:#0a0a0a;
+    --foreground:#ededed;
+  }
+}
