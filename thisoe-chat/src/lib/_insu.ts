@@ -1,6 +1,7 @@
 import{Db,MongoClient,ServerApiVersion}from"mongodb"
 
 const{DB_HOST,DB_NAME,DB_CLCT}=process.env
+console.log(DB_HOST,DB_NAME,DB_CLCT)
 if(!DB_HOST||!DB_NAME||!DB_CLCT){ // TS mustdo
   throw new Error('[THISOE🩵DEBUG] Missing environment variables.')
 }
