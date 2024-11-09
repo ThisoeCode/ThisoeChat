@@ -1,10 +1,13 @@
-import{signIn}from"@/lib/auth"
+// Docs: https://authjs.dev/guides/pages/signin
+import{signIn,providerMap}from"@/lib/auth"
+import{SignInBtn}from"./_use_client"
 
 export function SignIn({className}:{className:string}){
-  return<form action={async()=>{
+  return<form className={className}
+  action={async()=>{
     "use server"
-    await signIn()
-  }} className={className}>
-    <button type="submit"><i className='google svg'/>Sign in</button>
+    await signIn(providerMap[0].id,{redirectTo:"/chat"})
+  }}>
+    <SignInBtn provider={providerMap[0].name}/>
   </form>
 }

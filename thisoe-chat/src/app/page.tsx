@@ -1,16 +1,12 @@
-import{SignIn}from"@/lib/auth"
-export default function _(){
+import{SignIn}from"@/components/SignIn"
+import{auth}from"@/lib/auth"
+import{redirect as r}from"next/navigation"
+
+export default async function _(){
+  const session = await auth()
+  if(session)r('/chat')
   return<i id="guestpage">
     <h1>Thisoe Chat!</h1>
-
-    
-
-    <footer>
-      <p>
-        <a href="https://thisoe.dev/" target="_blank">Thisoe.dev</a> | <a href="https://thisoe.dev/project/">Showcase</a>
-        <br/>
-        © 2024 Thisoe
-      </p>
-    </footer>
+    <SignIn className="guest"/>
   </i>
 }

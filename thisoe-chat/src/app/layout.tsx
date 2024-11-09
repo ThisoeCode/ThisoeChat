@@ -10,5 +10,13 @@ export const metadata:Metadata={
 export default function RootLayout(
   {children}:Readonly<{children:React.ReactNode}>
 ){
-  return<html lang="en"><body>{children}</body></html>
+  return<html lang="en"><body>
+    {children}
+    <footer>
+      <p>
+        <a href="https://thisoe.dev/" target="_blank">Thisoe.dev</a> | <a href="https://thisoe.dev/project/">Showcase</a>
+        <br/> © 2024 Thisoe
+      </p>
+    </footer>
+  </body></html>
 }
