@@ -1,3 +1,3 @@
-export function _(){
+export default function _(){
   return<></>
 }
