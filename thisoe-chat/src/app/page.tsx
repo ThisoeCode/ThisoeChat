@@ -5,7 +5,7 @@ import{redirect as r}from"next/navigation"
 export default async function _(){
   const session = await auth()
   if(session)r('/chat')
-  return<i id="guestpage">
+  return<i id="guestpage" className="chat-bg">
     <h1>Thisoe Chat!</h1>
     <SignIn className="guest"/>
   </i>

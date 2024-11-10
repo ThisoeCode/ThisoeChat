@@ -11,6 +11,12 @@ export type Chat = {
     dt:number
 }
 
+export interface ThisoeChatUserExtension {
+  uid: string
+  uname: string
+  ustat: number
+}
+
 
 
 // DEV TYPES

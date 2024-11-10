@@ -17,6 +17,15 @@ export function ChatHeader({title}:{
 
 
 
+export function MainChat({session,chatWith}:{session:Session,chatWith:string}){
+  // TODO
+  return<div id='main-chat' className="chat-bg">
+    chat as {session.user?.id}<br/>with {chatWith}
+  </div>
+}
+
+
+
 export function Aside({session}:{
   session:Session,
 }){
