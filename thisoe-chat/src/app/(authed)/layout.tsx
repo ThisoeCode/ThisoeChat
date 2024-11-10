@@ -1,10 +1,6 @@
-import{auth}from"@/lib/auth"
-import{redirect as r}from"next/navigation"
+import{session}from"@/lib/lib"
 
-export default async function _(
-  {children}:Readonly<{children:React.ReactNode}>
-){
-  const session = await auth()
-  if(!session)r('/')
+export default async function _({children}:Readonly<{children:React.ReactNode}>){
+  await session(true)
   return<>{children}</>
 }

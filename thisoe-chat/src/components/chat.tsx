@@ -1,5 +1,6 @@
 import{signOut}from"@/lib/auth"
-import type{Session}from"next-auth"
+import{session}from"@/lib/lib"
+import{UserList}from"@/components/UserList"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -7,9 +8,10 @@ export function ChatHeader({title}:{
   title:string,
 }){
   return<header>
-    <Link href={'/users'} id="menu"><i className="menu svg"/></Link>
+    <Link href={'/chat'} id="menu"><i className="menu svg"/></Link>
     <h2>{title}</h2>
     <form action={async()=>{"use server";await signOut()}}>
+      {/* TODO replace this signout btn with user profile (phone only) */}
       <button className="signout svg" type="submit"></button>
     </form>
   </header>
@@ -17,31 +19,25 @@ export function ChatHeader({title}:{
 
 
 
-export function MainChat({session,chatWith}:{session:Session,chatWith:string}){
+export function MainChat({s,chatWith}:{s:session,chatWith:string}){
   // TODO
   return<div id='main-chat' className="chat-bg">
-    chat as {session.user?.id}<br/>with {chatWith}
+    chat as {s.id}<br/>with {chatWith}
   </div>
 }
 
 
 
-export function Aside({session}:{
-  session:Session,
-}){
-  const bigAva = (url:string|null|undefined)=>{
-    if(!url||!url.includes("lh3.googleusercontent.com"))return'/favicon.ico'
-    return url.replace(/=s\d+-c?/,'=s0')
-  }
+export function Aside({s}:{s:session}){
   return<aside>
     <Link id="settings-ava" href='/settings'>
       <Image className="ava"
-        alt={session.user?.name+"'s avatar"}
-        src={bigAva(session.user?.image)}
+        alt={s.name+"'s avatar"}
+        src={s.ava}
         width={99} height={99}
       />
     </Link>
     <Link id="settings" href='/settings'>Profile Settings</Link>
-    <nav>nav</nav>
+    <UserList/>
   </aside>
 }

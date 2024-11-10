@@ -11,7 +11,9 @@ export type Chat = {
     dt:number
 }
 
-export interface ThisoeChatUserExtension {
+export interface Users {
+/** email as id */
+  email: string
   uid: string
   uname: string
   ustat: number
@@ -20,13 +22,13 @@ export interface ThisoeChatUserExtension {
 
 
 // DEV TYPES
-import type{WithId,WithoutId}from"mongodb"
+import type{ObjectId,WithId,WithoutId}from"mongodb"
 import type{NextRequest}from"next/server"
 /** A preparation of everything type. */
 export type preThisoe =
 string|number|boolean|undefined|null|
 Date|Error|NextRequest|React.ReactNode|
-WithId<Document>|WithoutId<Document>|
+WithId<Document>|WithoutId<Document>|ObjectId|
 Promise<preThisoe>|preThisoe[]|
 (()=>preThisoe)
 /** An everything type. */
