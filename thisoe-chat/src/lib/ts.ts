@@ -12,8 +12,8 @@ export type Chat = {
 }
 
 export interface Users {
-/** email as id */
-  email: string
+/** reference to Authjs user */
+  _ref: ObjectId
   uid: string
   uname: string
   ustat: number

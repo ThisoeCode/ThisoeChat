@@ -6,7 +6,7 @@ export default async function _({params}:{params:Promise<{to:string}>}){
   return<i id="chat">
     <Aside s={s}/>
     <main>
-      <ChatHeader title={'Thisoe Chat!'}/>
+      <ChatHeader title={'Thisoe Chat!'} ava={s.ava}/>
       <MainChat s={s} chatWith={(await params).to}/>
     </main>
   </i>

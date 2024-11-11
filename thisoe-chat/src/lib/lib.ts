@@ -12,17 +12,16 @@ export const bigAva = (url:string|null|undefined)=>{
   if(!url||!url.includes("lh3.googleusercontent.com"))return'/favicon.ico'
   return url.replace(/=s\d+-c?/,'=s0')
 }
-export interface session {email:string,ava:string,id:string,name:string}
-export const session =async(needRedirect:boolean=false)=>{
+export interface session {email:string,ava:string,name:string}
+export const session =async(needRedirect:boolean=true)=>{
   const
     s = await auth(),
     email = s?.user?.email,
     img = s?.user?.image,
-    id = s?.user?.id,
     name = s?.user?.name
-  if(s&&email&&img&&id&&name&&needRedirect)r('/')
+  if(!(s&&email&&img&&name)&&needRedirect)r('/')
   const ava = bigAva(img)
-  return{email,ava,id,name}as session
+  return{email,ava,name}as session
 }
 
 

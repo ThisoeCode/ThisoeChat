@@ -5,15 +5,8 @@ import Link from "next/link"
 export async function UserList(){
   const s:session = await session()
   return<nav>
-    <Link href={'/chat/'+s.id}>
-      <Image className="ava"
-        alt={s.name+"'s avatar"}
-        src={s.ava}
-        width={55} height={55}
-      />
-      <b>{s.name}</b>
-    </Link>
-    <Link href={'/chat/'+s.id}>
+    <Auser/>
+    <Link href={'/chat/'+s.name}>
       <Image className="ava"
         alt={s.name+"'s avatar"}
         src={s.ava}
@@ -21,13 +14,20 @@ export async function UserList(){
       />
       <b>{s.name} A TEST OF VERY LONG USERNAME LOREM IPSUM BLAHBLAH</b>
     </Link>
-    <Link href={'/chat/'+s.id}>
-      <Image className="ava"
-        alt={s.name+"'s avatar"}
-        src={s.ava}
-        width={55} height={55}
-      />
-      <b>{s.name}</b>
-    </Link>
+    <Auser/><Auser/><Auser/><Auser/><Auser/><Auser/>
+    <Auser/><Auser/><Auser/><Auser/><Auser/><Auser/>
   </nav>
+}
+
+
+async function Auser(){
+  const s:session = await session()
+  return<Link href={'/chat/'+s.name}>
+    <Image className="ava"
+      alt={s.name+"'s avatar"}
+      src={s.ava}
+      width={55} height={55}
+    />
+    <b>{s.name}</b>
+  </Link>
 }

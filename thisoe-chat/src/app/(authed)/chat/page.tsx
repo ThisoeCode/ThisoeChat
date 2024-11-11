@@ -12,7 +12,7 @@ export default async function _(){
       <Link href='/settings'>
         <Image className="ava"
           alt="avatar" src={s.ava}
-          width={24} height={24}
+          width={30} height={30}
         />
       </Link>
     </header>
