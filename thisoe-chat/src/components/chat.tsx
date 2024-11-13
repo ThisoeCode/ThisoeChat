@@ -1,5 +1,6 @@
 import{session}from"@/lib/lib"
 import{UserList}from"@/components/UserList"
+import{Amsg}from"./Amsg"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -23,9 +24,24 @@ export function ChatHeader({title,ava}:{
 
 export function MainChat({s,chatWith}:{s:session,chatWith:string}){
   // TODO
-  return<div id='main-chat' className="chat-bg">
-    chat as {s.name}<br/>with {chatWith}
-  </div>
+  return<i id='main-chat' className="chat-bg">
+    <Amsg data={{c:"me! woohooooooooo",dt:1725799900}}/>
+    <Amsg data={{c:"톡",dt:1725799900}}/>
+    <Amsg ava={s.ava} data={{c:"ruaaaa  iu ;ug i u iu ;u ;u ;ou ; ou ;ou b; ub ;ub ib lkj bkj hb kjh v kuh vkuv kuhv kuhv kjhv kj hvkj hvkj hvkjhbasdilhbv a aaaa aaa aaaa twrgfrga tr wrae aaa aa awefa ",dt:1725799923}}/>
+    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
+    <Amsg ava={s.ava} data={{c:`chat as ${s.name}<br/>with ${chatWith}`,dt:1725772333}}/>
+    <Amsg data={{c:"me! test",dt:1725799900}}/>
+    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
+    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
+    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
+    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
+    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
+    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
+    <Amsg ava={s.ava} data={{c:"b",dt:1725772333}}/>
+    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
+    <Amsg data={{c:"bruh",dt:1725772333}}/>
+    <Amsg ava={s.ava} data={{c:"lol",dt:1725772333}}/>
+  </i>
 }
 
 
@@ -40,6 +56,7 @@ export function Aside({s}:{s:session}){
       />
     </Link>
     <Link id="s-txt" href='/settings'>Profile Settings</Link>
+    <hr/>
     <UserList/>
   </aside>
 }

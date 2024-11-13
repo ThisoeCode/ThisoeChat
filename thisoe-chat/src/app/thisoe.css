@@ -3,6 +3,7 @@
   /* colors */
   --thisoe:#178577;
   --thisoe-faint:#17857730;
+  --thisoe-faint-solid:#DAE8E5;
   --background:#fefefe;
   --foreground:#171717;
 }
@@ -10,8 +11,8 @@
 /* resets */
 i,button,a,p{all:unset}
 i,main,header,nav,aside,label{display:flex}
-main,aside,nav,#home,#guestpage,#setting,#proform{flex-direction:column}
-img{user-select:none}
+main,aside,nav,#home,#guestpage,#setting,#proform,#main-chat,.amsg>.p{flex-direction:column}
+img{user-select:none;-webkit-user-drag:none}
 button,a{transition:.2s ease;cursor:pointer}
 button.disabled,a.disabled{background:#ccc !important;border-color:transparent !important;cursor:default}
 button:hover:not(.disabled),a:hover:not(.disabled):not(#s-ava):not(#s-txt){
@@ -192,8 +193,39 @@ main{
 .menu,#s-phone>.ava{visibility:hidden}
 
 #main-chat{
-  flex:1; margin:0;
+  flex:1;
+  gap:9pt;
+  max-width:508pt; overflow-y:scroll;
+  height:calc(100vh - 81px);
+  margin:0 auto;
+  padding:9pt 0;
+
 }
+
+.amsg{
+  padding:0 30pt 0 9pt;
+}
+.amsg .p{
+  margin:0 0 0 3pt;
+  padding:7px 18pt 7px 9pt;
+  border-radius:0 18pt 18pt 18pt;
+  background:var(--thisoe-faint-solid);
+  font-size:16pt;
+}
+.amsg.me{
+  justify-content:flex-end;
+  padding:0 9pt 0 30pt;
+}
+.amsg.me .p{
+  margin-right:3pt;
+  border-radius:18pt 18pt 0 18pt;
+}
+.amsg span{
+  align-self:flex-end;
+  font-size:12px; color:#393939;
+  white-space:nowrap;
+  transform:translateX(9px) translateY(1pt);
+}.amsg.me span{right:7px}
 
 /* aside */
 aside{
@@ -257,7 +289,7 @@ button:has(.back){display:flex}
   font-size:16pt; line-height:1;
   border:var(--thisoe) solid 3pt;
   border-radius:99pt;
-}
+}#signout button:hover{background:pink}
 #signout .svg{width:18pt;height:18pt}
 
 
