@@ -1,7 +1,7 @@
 import{Db,MongoClient,ServerApiVersion}from"mongodb"
 
-const{DB_HOST,DB_NAME,DB_CLCT}=process.env
-if(!DB_HOST||!DB_NAME||!DB_CLCT){ // TS mustdo
+const{DB_HOST,DB_NAME,DB_CLCT,DB_USER}=process.env
+if(!DB_HOST||!DB_NAME||!DB_CLCT||!DB_USER){ // TS mustdo
   throw new Error('[THISOE🩵DEBUG] Missing environment variables.')
 }
 
@@ -25,7 +25,9 @@ export default async function insu(){
 }
 
 // Export COLLECTIONs
-export const DB = async ()=>{
+const DB = async(isUsersData:boolean=false)=>{
   const {db} = await insu()
-  return db.collection(DB_CLCT)
+  return db.collection(isUsersData?DB_USER:DB_CLCT)
 }
+export const mainDB = await DB()
+export const userDB = await DB(true)

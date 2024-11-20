@@ -8,20 +8,38 @@ export const headJ = {'Content-Type':'application/json'}
 // 2. auth
 import{auth}from"@/lib/auth"
 import{redirect as r}from"next/navigation"
+import{userDB}from"./_insu"
+import type{Auser}from"./ts"
+
 export const bigAva = (url:string|null|undefined)=>{
   if(!url||!url.includes("lh3.googleusercontent.com"))return'/favicon.ico'
   return url.replace(/=s\d+-c?/,'=s0')
 }
-export interface session {email:string,ava:string,name:string}
+export interface session {
+  id:string,name:string,ava:string,recent:string[],pin:string[],
+}
 export const session =async(needRedirect:boolean=true)=>{
   const
     s = await auth(),
-    email = s?.user?.email,
+    e = s?.user?.email,
     img = s?.user?.image,
-    name = s?.user?.name
-  if(!(s&&email&&img&&name)&&needRedirect)r('/')
-  const ava = bigAva(img)
-  return{email,ava,name}as session
+    doc=await userDB.findOne(
+      {e,ustat:1},
+      {projection:{_id:0,ustat:0}}
+    )as Auser|null,
+    id=doc?.uid,
+    name=doc?.uname,
+    recent=doc?.rc,
+    pin=doc?.pin
+  if(!(s&&doc&&img&&id&&name)&&needRedirect)r('/')
+  console.dir(doc)
+  return{
+    id:id as string,
+    name:name as string,
+    ava:bigAva(img),
+    recent:recent as string[],
+    pin:pin as string[],
+  }as session
 }
 
 

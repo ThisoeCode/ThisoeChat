@@ -1,3 +1,6 @@
+export type sn = string|null|undefined
+export type sna = string[]|undefined
+
 export type Chat = {
   /** sender */
     n1:string
@@ -11,12 +14,16 @@ export type Chat = {
     dt:number
 }
 
-export interface Users {
-/** reference to Authjs user */
-  _ref: ObjectId
+export type Auser = {
+/** email: reference to Authjs user */
+  e: string
   uid: string
   uname: string
   ustat: number
+/** recent chats uid[ ] */
+  rc: string[]
+/** pinned users' uid[ ] */
+  pin: string[]
 }
 
 

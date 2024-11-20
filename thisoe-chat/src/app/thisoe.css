@@ -289,7 +289,7 @@ button:has(.back){display:flex}
   font-size:16pt; line-height:1;
   border:var(--thisoe) solid 3pt;
   border-radius:99pt;
-}#signout button:hover{background:pink}
+}#signout button:hover{background:pink;border-color:brown}
 #signout .svg{width:18pt;height:18pt}
 
 

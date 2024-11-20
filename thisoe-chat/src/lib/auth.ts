@@ -2,7 +2,8 @@ import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
 import{Provider}from"next-auth/providers"
 import{MongoDBAdapter}from"@auth/mongodb-adapter"
-import{con}from"./_insu"
+import{con,userDB}from"./_insu"
+import type{Auser}from"./ts"
 
 const providers:Provider[]=[
   Google,
@@ -22,10 +23,19 @@ export const{handlers,auth,signIn,signOut}=NextAuth({
     databaseName:process.env.DB_AUTH,
   }),
   session:{strategy:"jwt"},
-  // callbacks:{
-    // signIn({profile}){
-    //   console.dir(profile)
-    //   return true
-    // },
-  // },
+  callbacks:{
+    async signIn({user}){
+      const auser = await userDB.findOne({e:user.email})
+      if(!auser&&user.email&&user.id&&user.name){
+        const aNewUser:Auser = {
+          e:user.email,
+          uid:user.id.slice(3,9),
+          uname:user.name,
+          ustat:1,rc:[],pin:[],
+        }
+        await userDB.insertOne(aNewUser)
+      }
+      return true
+    },
+  },
 })
