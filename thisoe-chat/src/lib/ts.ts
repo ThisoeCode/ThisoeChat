@@ -39,4 +39,5 @@ WithId<Document>|WithoutId<Document>|ObjectId|
 Promise<preThisoe>|preThisoe[]|
 (()=>preThisoe)
 /** An everything type. */
-export type Thisoe = preThisoe|{[key:string]:preThisoe}|Readonly<preThisoe>
+export type Thisoe = preThisoe|{[_:string]:preThisoe}|Readonly<preThisoe>
+export type Aobj = {[_:string]:Thisoe}

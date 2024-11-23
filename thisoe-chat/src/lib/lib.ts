@@ -1,6 +1,6 @@
 // 1. API stuff
 const selfurl=process.env.NEXT_PUBLIC_SELF_URL
-if(!selfurl)throw new Error('[THISOE🩵DEBUG] Missing environment variables `PUBLIC_SELF_URL`.')
+if(!selfurl)throw new Error('[THISOE🩵DEBUG] Missing environment variable `SELF_URL`.')
 export const API = selfurl+'/api/'
 export const headJ = {'Content-Type':'application/json'}
 
@@ -15,8 +15,8 @@ export const bigAva = (url:string|null|undefined)=>{
   if(!url||!url.includes("lh3.googleusercontent.com"))return'/favicon.ico'
   return url.replace(/=s\d+-c?/,'=s0')
 }
-export interface session {
-  id:string,name:string,ava:string,recent:string[],pin:string[],
+export type Asession = {
+  e:string,id:string,name:string,ava:string,recent:string[],pin:string[],
 }
 export const session =async(needRedirect:boolean=true)=>{
   const
@@ -31,15 +31,11 @@ export const session =async(needRedirect:boolean=true)=>{
     name=doc?.uname,
     recent=doc?.rc,
     pin=doc?.pin
-  if(!(s&&doc&&img&&id&&name)&&needRedirect)r('/')
-  console.dir(doc)
+  if(!(s&&e&&doc&&img&&id&&name)&&needRedirect)r('/')
   return{
-    id:id as string,
-    name:name as string,
+    e,id,name,recent,pin,
     ava:bigAva(img),
-    recent:recent as string[],
-    pin:pin as string[],
-  }as session
+  }as Asession
 }
 
 

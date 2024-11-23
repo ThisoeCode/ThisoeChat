@@ -281,6 +281,13 @@ button:has(.back){display:flex}
   border-bottom:black solid 1px;
   cursor:text;
 }
+#proform .btn-wrap{
+  width:90%;margin:0;
+  justify-content:center;
+  gap:9pt;
+}
+#proform .btn-wrap>button{margin:0}
+#proform button.revoke{background:#3339}
 
 #signout{margin:auto}
 #signout button{

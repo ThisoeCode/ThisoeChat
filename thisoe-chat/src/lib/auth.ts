@@ -29,7 +29,7 @@ export const{handlers,auth,signIn,signOut}=NextAuth({
       if(!auser&&user.email&&user.id&&user.name){
         const aNewUser:Auser = {
           e:user.email,
-          uid:user.id.slice(3,9),
+          uid:'U'+user.id.slice(3,9),
           uname:user.name,
           ustat:1,rc:[],pin:[],
         }

@@ -1,9 +1,9 @@
-import{session}from"@/lib/lib"
+import{session,Asession}from"@/lib/lib"
 import Image from "next/image"
 import Link from "next/link"
 
 export async function UserList(){
-  const s:session = await session()
+  const s:Asession = await session()
   return<nav>
     <Auser/>
     <Link href={'/chat/'+s.name}>
@@ -21,7 +21,7 @@ export async function UserList(){
 
 
 async function Auser(){
-  const s:session = await session()
+  const s:Asession = await session()
   return<Link href={'/chat/'+s.name}>
     <Image className="ava"
       alt={s.name+"'s avatar"}

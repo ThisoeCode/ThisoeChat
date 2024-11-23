@@ -2,6 +2,7 @@
 import{signIn,providerMap}from"@/lib/auth"
 import{SignInBtn}from"./_use_client"
 
+/** `form.{className}` */
 export function SignIn({className}:{className:string}){
   return<form className={className}
   action={async()=>{

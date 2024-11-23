@@ -1,9 +1,10 @@
-import{session}from"@/lib/lib"
+import type{Asession}from"@/lib/lib"
 import{UserList}from"@/components/UserList"
 import{Amsg}from"./Amsg"
 import Image from "next/image"
 import Link from "next/link"
 
+/** `header` */
 export function ChatHeader({title,ava}:{
   title:string,
   ava:string,
@@ -21,8 +22,8 @@ export function ChatHeader({title,ava}:{
 }
 
 
-
-export function MainChat({s,chatWith}:{s:session,chatWith:string}){
+/** `i#main-chat` */
+export function MainChat({s,chatWith}:{s:Asession,chatWith:string}){
   // TODO
   return<i id='main-chat' className="chat-bg">
     <Amsg data={{c:"me! woohooooooooo",dt:1725799900}}/>
@@ -45,8 +46,8 @@ export function MainChat({s,chatWith}:{s:session,chatWith:string}){
 }
 
 
-
-export function Aside({s}:{s:session}){
+/** `aside` */
+export function Aside({s}:{s:Asession}){
   return<aside>
     <Link id="s-ava" href='/settings'>
       <Image className="ava"

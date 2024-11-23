@@ -7,6 +7,6 @@ export async function GET(req:NextRequest,{params}:{
   const
     {from,to}=await params,
     sp = req.nextUrl.searchParams
-  console.dir(sp.get('a'))
+  console.dir(sp.get('a')) // TODO DELETE
   return NJ({ping:'Pong!',from,to,param:sp.get('a'),req,t:t.t2},201)
 }

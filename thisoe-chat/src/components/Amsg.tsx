@@ -1,6 +1,7 @@
 import{unixToDate}from"@/lib/lib"
 import Image from "next/image"
 
+/** `i#amsg` */
 export function Amsg({data,ava}:{ava?:string,data:{
   dt:number,
   c:string,
