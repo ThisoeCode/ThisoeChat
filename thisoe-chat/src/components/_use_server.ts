@@ -1,9 +1,11 @@
 'use server'
-
-// 1. PUT
 import{API}from"@/lib/lib"
 import type{Aobj}from"@/lib/ts"
-export const put = async(
+
+export const
+
+// 1. PUT
+put = async(
   urlSuffix:string,
   data:Aobj,
   method:string='PUT'

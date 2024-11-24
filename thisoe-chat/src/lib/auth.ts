@@ -28,7 +28,7 @@ export const{handlers,auth,signIn,signOut}=NextAuth({
       const auser = await userDB.findOne({e:user.email})
       if(!auser&&user.email&&user.id&&user.name){
         const aNewUser:Auser = {
-          e:user.email,
+          e:user.email.split('@')[0],
           uid:'U'+user.id.slice(3,9),
           uname:user.name,
           ustat:1,rc:[],pin:[],

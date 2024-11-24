@@ -11,7 +11,7 @@
 /* resets */
 i,button,a,p{all:unset}
 i,main,header,nav,aside,label{display:flex}
-main,aside,nav,#home,#guestpage,#setting,#proform,#main-chat,.amsg>.p{flex-direction:column}
+main,aside,nav,nav i,#home,#guestpage,#setting,#proform,.amsg>.p{flex-direction:column}
 img{user-select:none;-webkit-user-drag:none}
 button,a{transition:.2s ease;cursor:pointer}
 button.disabled,a.disabled{background:#ccc !important;border-color:transparent !important;cursor:default}
@@ -163,17 +163,17 @@ nav a{
   border-radius:99pt;
   background:#ccca;
 }nav a:hover{background:var(--thisoe-faint)}
-nav a b{
-  height:25pt;
-  font-size:12pt;line-height:1;
-  margin:auto 0;
-  /* Show 2 line and ellipsis */
-  display:-webkit-box;
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:2;
-  overflow:hidden;
-  text-overflow:ellipsis;
+nav i{
+  justify-content:center;
+  width:calc(100% - 72px); height:100%;
 }
+nav i>*{
+  font-size:16pt;line-height:18pt;
+  margin:0;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}nav i>p{font-size:12pt;color:gray}
 
 
 /*******   CHAT   *******/
@@ -193,24 +193,24 @@ main{
 .menu,#s-phone>.ava{visibility:hidden}
 
 #main-chat{
+  flex-direction:column-reverse;
   flex:1;
   gap:9pt;
-  max-width:508pt; overflow-y:scroll;
-  height:calc(100vh - 81px);
+  overflow-y:scroll;
+  height:calc(100vh - 81px - 30pt);
   margin:0 auto;
   padding:9pt 0;
-
 }
-
 .amsg{
   padding:0 30pt 0 9pt;
 }
 .amsg .p{
   margin:0 0 0 3pt;
-  padding:7px 18pt 7px 9pt;
+  padding:7px 16pt 7px 9pt;
   border-radius:0 18pt 18pt 18pt;
   background:var(--thisoe-faint-solid);
-  font-size:16pt;
+  font-size:18px;
+  white-space:pre-line;
 }
 .amsg.me{
   justify-content:flex-end;
@@ -224,8 +224,36 @@ main{
   align-self:flex-end;
   font-size:12px; color:#393939;
   white-space:nowrap;
-  transform:translateX(9px) translateY(1pt);
-}.amsg.me span{right:7px}
+  transform:translateX(7px) translateY(1pt);
+}.amsg.me span{transform:translateX(9pt)}
+
+#prompt{
+  display:flex;
+  align-items:center;
+  width:93%;
+  height:30pt;
+  margin:0 auto;
+  outline:var(--thisoe) solid 1px;
+  background:var(--thisoe);
+  overflow:hidden;
+  transform:translateY(1pt);
+}
+#prompt input{
+  all:unset;
+  height:calc(100% - 6px); width:calc(100% - 72pt);
+  padding:3px 9px;
+  background:var(--thisoe-faint-solid);
+  font-size:18px;
+  font-family:serif;
+}
+#prompt button{
+  flex:1;
+  font-size:18px; line-height:30pt;
+  font-weight:bold; color:#fff;
+  text-align:center; font-family:sans-serif;
+  transition:.1s;
+}
+#prompt *:disabled{filter:grayscale(99%)}
 
 /* aside */
 aside{
@@ -262,7 +290,7 @@ button:has(.back){display:flex}
   justify-content:space-around;
   padding-right:9pt;
 }
-#proform *{font-family:serif}
+#proform *{font-family:serif;white-space:nowrap}
 #proform button{
   margin:0 auto;
   padding:7px 9pt;
@@ -306,12 +334,26 @@ button:has(.back){display:flex}
 /*******   MEDIA CONFIG   *******/
 /* phone */
 @media only screen and (max-width: 597px) {
+  ::-webkit-scrollbar{width:7px}
+
   h1{margin:30vh auto 3vh;font-size:36pt}
   aside{display:none}
   #menu,#s-phone{pointer-events:all}
   .menu,#s-phone>.ava{visibility:visible}
-  header{width:calc(100% - 18pt)}
-  h2{font-size:16pt}
+  header{width:calc(100% - 14px);padding:7px}
+  h2{font-size:16pt;overflow:hidden}
+
+  #prompt{width:100%}
+
+  #setting{padding:9pt 0 0;overflow:hidden}
+  #profile{
+    flex-direction:column;
+    align-items:center;
+    border-radius:27pt;
+  }
+  #proform{gap:7pt}
+  #proform .btn-wrap{width:auto;padding:3pt}
+  #proform input{width:99px}
 }
 
 /* dark */

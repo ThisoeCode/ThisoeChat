@@ -1,4 +1,4 @@
-import type{Asession}from"@/lib/lib"
+import type{Asession}from"@/lib/ts"
 import{UserList}from"@/components/UserList"
 import{Amsg}from"./Amsg"
 import Image from "next/image"
@@ -30,9 +30,9 @@ export function MainChat({s,chatWith}:{s:Asession,chatWith:string}){
     <Amsg data={{c:"톡",dt:1725799900}}/>
     <Amsg ava={s.ava} data={{c:"ruaaaa  iu ;ug i u iu ;u ;u ;ou ; ou ;ou b; ub ;ub ib lkj bkj hb kjh v kuh vkuv kuhv kuhv kjhv kj hvkj hvkj hvkjhbasdilhbv a aaaa aaa aaaa twrgfrga tr wrae aaa aa awefa ",dt:1725799923}}/>
     <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
-    <Amsg ava={s.ava} data={{c:`chat as ${s.name}<br/>with ${chatWith}`,dt:1725772333}}/>
+    <Amsg ava={s.ava} data={{c:`chat as ${s.name}\nwith ${chatWith}`,dt:1725772333}}/>
     <Amsg data={{c:"me! test",dt:1725799900}}/>
-    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
+    <Amsg ava={s.ava} data={{c:"blahblah",dt:172577233}}/>
     <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
     <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
     <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
@@ -44,6 +44,7 @@ export function MainChat({s,chatWith}:{s:Asession,chatWith:string}){
     <Amsg ava={s.ava} data={{c:"lol",dt:1725772333}}/>
   </i>
 }
+
 
 
 /** `aside` */

@@ -27,13 +27,13 @@ const t1 = (req:NextRequest)=>{
 }
 const t2 = 'Thisoe msg::'
 const t3 = 'Thisoe WARNING::'
-const t4 = 'Thisoe FATAL::'
+const t5 = 'Thisoe FATAL::'
 const t422 = (SERV_ID:string)=>{
   console.error('[WARNING:４２２] SERV_ID::'+SERV_ID)
   return NJ({thisoeERR:'Unprocessable Entity'},422)
 }
 const t500 =(process:string)=>{
-  console.error(`[${t4+process} 500] UNKNOWN ERROR!!!!!!!`)
+  console.error(`[${t5+process} 500] UNKNOWN ERROR!!!!!!!`)
 }
 const NJ500 = NJ({},500)
-export const servTitle = {t1,t2,t3,t4,t422,t500,NJ500}
+export const servTitle = {t1,t2,t3,t5,t422,t500,NJ500}

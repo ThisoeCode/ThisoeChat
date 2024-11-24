@@ -1,27 +1,25 @@
 // 1. API stuff
 const selfurl=process.env.NEXT_PUBLIC_SELF_URL
 if(!selfurl)throw new Error('[THISOE🩵DEBUG] Missing environment variable `SELF_URL`.')
-export const API = selfurl+'/api/'
-export const headJ = {'Content-Type':'application/json'}
+export const
+  API = selfurl+'/api/',
+  headJ = {'Content-Type':'application/json'}
 
 
 // 2. auth
 import{auth}from"@/lib/auth"
 import{redirect as r}from"next/navigation"
 import{userDB}from"./_insu"
-import type{Auser}from"./ts"
+import type{Asession,Auser}from"./ts"
 
 export const bigAva = (url:string|null|undefined)=>{
   if(!url||!url.includes("lh3.googleusercontent.com"))return'/favicon.ico'
   return url.replace(/=s\d+-c?/,'=s0')
 }
-export type Asession = {
-  e:string,id:string,name:string,ava:string,recent:string[],pin:string[],
-}
 export const session =async(needRedirect:boolean=true)=>{
   const
     s = await auth(),
-    e = s?.user?.email,
+    e = s?.user?.email?.split('@')[0],
     img = s?.user?.image,
     doc=await userDB.findOne(
       {e,ustat:1},
@@ -68,15 +66,20 @@ export const timeDiff = ($uts:number)=>{
 export const TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone
 
 export const unixToDate=($uts:number)=>{
-  const dt = new Date($uts*1000),
-  months=['Jan.','Feb.','Mar.','Apr.','May','June','July','Aug.','Sep.','Oct.','Nov.','Dec.']
+  const
+    dt = new Date($uts*1000),
+    months=['Jan.','Feb.','Mar.','Apr.','May','June','July','Aug.','Sep.','Oct.','Nov.','Dec.'],
+    dig2=(_:number)=>{
+      const n=_+''
+      return n.length<2 ? '0'+n : n
+    }
   return{
-    yr: dt.getFullYear(),
-    mo: dt.getMonth(),
-    d: dt.getDate(),
-    h: dt.getHours(),
-    m: dt.getMinutes(),
-    s: dt.getSeconds(),
+    yr: dt.getFullYear()+'',
+    mo: dt.getMonth()+'',
+    d: dt.getDate()+'',
+    h: dig2(dt.getHours()),
+    m: dig2(dt.getMinutes()),
+    s: dig2(dt.getSeconds()),
     shortMonth: months[dt.getMonth()],
   }
 }

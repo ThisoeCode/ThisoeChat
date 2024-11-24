@@ -1,15 +1,17 @@
 'use client'
-import{useState}from"react"
-import{type Asession}from"@/lib/lib"
 import{put}from"./_use_server"
+import{useState,type KeyboardEvent as K}from"react"
+import type{Asession,chatData,chatID}from"@/lib/ts"
+
 
 const // lib
   servAlert=(SERV_ID:string)=>alert(`The server ran into an unexpected error.\nPlease contact Thisoe with the error ID: ${SERV_ID}`)
 
 
+export const
 // 1. homepage sign in
 /** `form.{className}>button` */
-export function SignInBtn({provider}:{provider:string}){
+SignInBtn = ({provider}:{provider:string})=>{
   const
     [txt,setTxt]=useState((
       <><i className={provider+' svg'}/>{'Sign In with '+provider}</>
@@ -23,17 +25,54 @@ export function SignInBtn({provider}:{provider:string}){
       disable('disabled')
     }}
   >{txt}</button>
-}
+},
+
 
 // 2. history back
-export function BackBtn(){
+BackBtn = ()=>{
   return<button onClick={()=>window.history.back()}><i className="back svg"/></button>
-}
+},
 
-// 3. `/settings`
+
+// 3. send chat form
+/** `#prompt` */
+ChatForm = ({send,IDs}:{
+  send: (data:chatData,IDs:chatID)=>ReturnType<typeof put>
+  IDs:chatID
+})=>{
+  const
+    [c,setc]=useState(''),
+    [disable,sending]=useState(false),
+    action=async()=>{
+      if(!!c){
+        sending(true)
+        const res = await send({c},IDs)
+        if(res.ok){
+          setc('')
+          sending(false)
+        }
+      }
+    }
+  return<i id="prompt">
+    <input value={c}
+      onChange={(_)=>setc(_.target.value)}
+      disabled={disable}
+      onKeyDown={({key}:K<HTMLInputElement>)=>{
+        if(key==='Enter')action()
+      }}
+      autoComplete="off" required
+    />
+    <button
+      onClick={action}
+      disabled={disable||!c}
+    >{disable?'...':'Send'}</button>
+  </i>
+},
+
+
+// 4. `/settings`
 /** `i#proform` */
-export function ProfileSettings({s}:{s:Asession}){
-  // TODO 1. change the `s:Asession` into us:uSession (from DB_USER)
+ProfileSettings = ({s}:{s:Asession})=>{
   const
     [currObj,setObj]=useState({uid:s.id,uname:s.name}),
     [uid,modUid]=useState(s.id),
@@ -80,11 +119,11 @@ export function ProfileSettings({s}:{s:Asession}){
   return<i id="proform">
     <label>
       <p>Display Name:&nbsp;</p>
-      <input value={uname} onChange={(e)=>modUname(e.target.value)}/>
+      <input value={uname} onChange={(_)=>modUname(_.target.value)}/>
     </label>
     <label>
       <p>ID: <span>@</span></p>
-      <input value={uid} onChange={(e)=>modUid(e.target.value)}/>
+      <input value={uid} onChange={(_)=>modUid(_.target.value)}/>
     </label>
     <i className="btn-wrap">
       <button

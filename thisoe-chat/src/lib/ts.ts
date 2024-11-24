@@ -1,17 +1,13 @@
 export type sn = string|null|undefined
 export type sna = string[]|undefined
 
-export type Chat = {
-  /** sender */
-    n1:string
-  /** recipient */
-    n2:string
-  /** message */
-    c:string
-  /** is read */
-    read:boolean
-  /** unix timestamp */
-    dt:number
+export type Asession = {
+  e:string
+  id:string
+  name:string
+  ava:string
+  recent:string[]
+  pin:string[]
 }
 
 export type Auser = {
@@ -25,6 +21,23 @@ export type Auser = {
 /** pinned users' uid[ ] */
   pin: string[]
 }
+
+export type Chat = {
+  /** sender */
+    e1:string
+  /** recipient */
+    e2:string
+  /** message */
+    c:string
+  /** is read */
+    read:boolean
+  /** unix timestamp */
+    dt:number
+}
+
+// chat action func
+export type chatID = {from:string,to:string}
+export type chatData = {c:string}
 
 
 

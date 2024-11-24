@@ -2,6 +2,8 @@ import{NextRequest}from"next/server"
 import{NJ,servTitle as t}from"@/lib/logsys"
 import{userDB}from"@/lib/_insu"
 
+const pro = 'SETTINGAPI'
+
 export async function PUT(req:NextRequest){t.t1(req)
   const {e,uid,uname,isIDchange}:{
     e:string
@@ -9,7 +11,6 @@ export async function PUT(req:NextRequest){t.t1(req)
     uname:string
     isIDchange:boolean
   } = await req.json()
-  console.dir({isIDchange}) // TODO DELETE
   // check format
   if(isIDchange){
     if(!/^[a-zA-Z][a-zA-Z0-9_]{0,15}$/.test(uid))
@@ -22,11 +23,14 @@ export async function PUT(req:NextRequest){t.t1(req)
     return NJ({err:'NAMETOOLONG'},240)
 
   // update profile
-  if(!e)return NJ({err:'bruh'},500)// TODO DELETE
+  if(!e){
+    console.error(`[${t.t5+pro} 500] BADAUTHINFO`)
+    return NJ({err:'BADAUTHINFO'},500)
+  }
   const
     set = isIDchange?{$set:{uid,uname}}:{$set:{uname}},
     res = await userDB.updateOne({e},set)
-  console.log('```````kkk')
-  console.dir(res) // TODO DELETE
-  return NJ({ping:'PONG'},201)
+  if(res.modifiedCount===1)return NJ({},202)
+  console.error(`[${t.t5+pro} 500] DBMODIFYFAIL`)
+  return NJ({err:'DBMODIFYFAIL'},500)
 }
