@@ -33,6 +33,7 @@ export const{handlers,auth,signIn,signOut}=NextAuth({
           e:user.email.split('@')[0],
           uid:'U'+user.id.slice(3,9),
           uname:user.name,
+          ava:user.image||'/favicon.ico',
           ustat:1,rc:[],pin:[],
         }
         await userDB.insertOne(aNewUser)

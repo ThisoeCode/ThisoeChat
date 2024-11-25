@@ -59,6 +59,6 @@ export function Aside({s}:{s:Asession}){
     </Link>
     <Link id="s-txt" href='/settings'>Profile Settings</Link>
     <hr/>
-    <UserList/>
+    <UserList selfID={s.id}/>
   </aside>
 }

@@ -103,7 +103,6 @@ ProfileSettings = ({s}:{s:Asession})=>{
       }
       else{
         servAlert(ret.SERV_ID||'SERVERIDGENERATEFAIL')
-        console.dir(ret)
       }
       isSaving(false)
     },

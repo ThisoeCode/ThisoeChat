@@ -1,31 +1,39 @@
 import Image from "next/image"
 import Link from "next/link"
-import{API, session}from"@/lib/lib"
+import{API}from"@/lib/lib"
 import type{Asession,Auser}from"@/lib/ts"
 
 export const
 
 /** `nav` */
-UserList =async()=>{
+UserList =async({selfID}:{selfID:string})=>{
   const
-    {id,name,ava}:Asession = await session(),
-    {list,prev}:{list:Auser[],prev:string} = await(await fetch(API+'list/users/0')).json(),
-    rows:JSX.Element[] = [],
-    jsx=list.forEach((v,i)=>{
-      rows.push(/* TODO */)
-    })
+    {list,/* prev */}:{list:Auser[],prev:number} =
+      await(await fetch(API+'list/users/0')).json(),
+    cards:Promise<JSX.Element>[]=[]
 
-  return<nav>
-    {jsx}
-  </nav>
+  // render
+  list.forEach(({uid,uname,ava})=>{
+    if(uid!==selfID)
+      cards.push(UserCard({id:uid,name:uname,ava}))
+  })
+
+  // TODO: make pinned users list
+  // * Maybe need to re-design the whole API, DB structure, and `UserCard`
+  // * Big project. Chill.
+
+  // TODO: use `prev` to load more users
+  // (global search `newPrev=list[list.length-1].su` for API modification)
+
+  return<nav>{cards}</nav>
 },
 
 /** `nav a` */
-UserCard =async({id,name,ava}:Asession)=>{
+UserCard =async({id,name,ava}:Partial<Asession>)=>{
   return<Link href={'/chat/'+id} title={name+'\n@'+id}>
     <Image className="ava"
       alt={name+"'s avatar"}
-      src={ava}
+      src={ava||'/favicon.ico'}
       width={55} height={55}
     />
     <i>

@@ -20,6 +20,7 @@ export type Auser = {
   e: string
   uid: string
   uname: string
+  ava:string
   ustat: number
 /** recent chats uid[ ] */
   rc: string[]

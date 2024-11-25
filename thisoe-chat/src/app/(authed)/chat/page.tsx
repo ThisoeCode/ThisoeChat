@@ -16,6 +16,6 @@ export default async function _(){
         />
       </Link>
     </header>
-    <i className="chat-bg"> <UserList/> </i>
+    <i className="chat-bg"> <UserList selfID={s.id}/> </i>
   </i>
 }
