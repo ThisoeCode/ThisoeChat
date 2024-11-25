@@ -11,6 +11,11 @@ export type Asession = {
 }
 
 export type Auser = {
+/**
+ * Signed-up timestamp (milliseconds since Nov 01 2024)
+ * - type `int64`
+ */
+  su: {$numberLong:string} | number
 /** email: reference to Authjs user */
   e: string
   uid: string
@@ -25,8 +30,11 @@ export type Auser = {
 export type Chat = {
   /** sender */
     e1:string
-  /** recipient */
-    e2:string
+  /**
+   * recipient
+   * - `null` when self-sending
+   */
+    e2:string|null
   /** message */
     c:string
   /** is read */

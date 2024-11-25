@@ -3,6 +3,7 @@ import Google from "next-auth/providers/google"
 import{Provider}from"next-auth/providers"
 import{MongoDBAdapter}from"@auth/mongodb-adapter"
 import{con,userDB}from"./_insu"
+import{suDb}from"./lib"
 import type{Auser}from"./ts"
 
 const providers:Provider[]=[
@@ -28,6 +29,7 @@ export const{handlers,auth,signIn,signOut}=NextAuth({
       const auser = await userDB.findOne({e:user.email})
       if(!auser&&user.email&&user.id&&user.name){
         const aNewUser:Auser = {
+          su:suDb(),
           e:user.email.split('@')[0],
           uid:'U'+user.id.slice(3,9),
           uname:user.name,

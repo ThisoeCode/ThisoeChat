@@ -30,7 +30,7 @@ const t3 = 'Thisoe WARNING::'
 const t5 = 'Thisoe FATAL::'
 const t422 = (SERV_ID:string)=>{
   console.error('[WARNING:４２２] SERV_ID::'+SERV_ID)
-  return NJ({thisoeERR:'Unprocessable Entity'},422)
+  return NJ({thisoeERR:'UnprocessableEntity'},422)
 }
 const t500 =(process:string)=>{
   console.error(`[${t5+process} 500] UNKNOWN ERROR!!!!!!!`)

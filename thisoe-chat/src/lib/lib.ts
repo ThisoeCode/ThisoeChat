@@ -12,11 +12,20 @@ import{redirect as r}from"next/navigation"
 import{userDB}from"./_insu"
 import type{Asession,Auser}from"./ts"
 
-export const bigAva = (url:string|null|undefined)=>{
+export const
+
+/** The base number of `Auser.su` */
+su_=1730386800000,
+suDb=(unixMs:number=Date.now()-su_)=>{
+  return{$numberLong:(unixMs)+''}
+},
+
+bigAva = (url:string|null|undefined)=>{
   if(!url||!url.includes("lh3.googleusercontent.com"))return'/favicon.ico'
   return url.replace(/=s\d+-c?/,'=s0')
-}
-export const session =async(needRedirect:boolean=true)=>{
+},
+
+session =async(needRedirect:boolean=true)=>{
   const
     s = await auth(),
     e = s?.user?.email?.split('@')[0],
@@ -34,11 +43,11 @@ export const session =async(needRedirect:boolean=true)=>{
     e,id,name,recent,pin,
     ava:bigAva(img),
   }as Asession
-}
+},
 
 
 // 3. datetime
-export const timeDiff = ($uts:number)=>{
+timeDiff = ($uts:number)=>{
   const
   now = Math.floor(Date.now() / 1000),
   seconds = now-$uts,
@@ -60,12 +69,12 @@ export const timeDiff = ($uts:number)=>{
     }
   }
   return 'just now'
-}
+},
 
 /** Get visitor's timezone */
-export const TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone
+TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone,
 
-export const unixToDate=($uts:number)=>{
+unixToDate=($uts:number)=>{
   const
     dt = new Date($uts*1000),
     months=['Jan.','Feb.','Mar.','Apr.','May','June','July','Aug.','Sep.','Oct.','Nov.','Dec.'],
