@@ -193,13 +193,14 @@ main{
 .menu,#s-phone>.ava{visibility:hidden}
 
 #main-chat{
-  flex-direction:column-reverse;
   flex:1;
+  flex-direction:column-reverse;
   gap:9pt;
-  overflow-y:scroll;
+  width:100%;
   height:calc(100vh - 81px - 30pt);
   margin:0 auto;
   padding:9pt 0;
+  overflow-y:scroll;
 }
 .amsg{
   padding:0 30pt 0 9pt;
@@ -221,6 +222,7 @@ main{
   border-radius:18pt 18pt 0 18pt;
 }
 .amsg span{
+  user-select:none;
   align-self:flex-end;
   font-size:12px; color:#393939;
   white-space:nowrap;
@@ -230,7 +232,7 @@ main{
 #prompt{
   display:flex;
   align-items:center;
-  width:93%;
+  width:100%;
   height:30pt;
   margin:0 auto;
   outline:var(--thisoe) solid 1px;
@@ -342,8 +344,6 @@ button:has(.back){display:flex}
   .menu,#s-phone>.ava{visibility:visible}
   header{width:calc(100% - 14px);padding:7px}
   h2{font-size:16pt;overflow:hidden}
-
-  #prompt{width:100%}
 
   #setting{padding:9pt 0 0;overflow:hidden}
   #profile{

@@ -25,10 +25,10 @@ export function ChatHeader({title,ava}:{
 /** `i#main-chat` */
 export function MainChat({s,chatWith}:{s:Asession,chatWith:string}){
   // TODO
-  return<i id='main-chat' className="chat-bg">
+  return<i id='main-chat'>
     <Amsg data={{c:"me! woohooooooooo",dt:1725799900}}/>
     <Amsg data={{c:"톡",dt:1725799900}}/>
-    <Amsg ava={s.ava} data={{c:"ruaaaa  iu ;ug i u iu ;u ;u ;ou ; ou ;ou b; ub ;ub ib lkj bkj hb kjh v kuh vkuv kuhv kuhv kjhv kj hvkj hvkj hvkjhbasdilhbv a aaaa aaa aaaa twrgfrga tr wrae aaa aa awefa ",dt:1725799923}}/>
+    <Amsg ava={s.ava} data={{c:"ruaaaa  iub ib lkj bkj hb kjh v kuh vkuv kuhv kuhv kjhv kj hvkj hvkj hvkjhbasdilhbv a aaaa aaa aaaa twrgfrga tr wrae aaa aa awefa ",dt:1725799923}}/>
     <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
     <Amsg ava={s.ava} data={{c:`chat as ${s.name}\nwith ${chatWith}`,dt:1725772333}}/>
     <Amsg data={{c:"me! test",dt:1725799900}}/>
