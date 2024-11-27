@@ -1,4 +1,4 @@
-import{session}from"@/lib/lib"
+import{session}from"@/lib/server"
 import{Aside,ChatHeader,MainChat}from"@/components/chat"
 import{ChatForm}from"@/components/_use_client"
 import{put}from"@/components/_use_server"
@@ -24,7 +24,7 @@ export default async function _({params}:prop){
     <main className="chat-bg">
       <ChatHeader title={'w/ '+s.name}ava={s.ava}/>
       <MainChat s={s}chatWith={to}/>
-      <ChatForm send={action} IDs={{from:s.id,to}}/>
+      <ChatForm sendF={action} IDs={{from:s.id,to}}/>
     </main>
   </i>
 }

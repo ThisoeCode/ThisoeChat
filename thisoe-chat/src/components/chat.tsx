@@ -1,6 +1,6 @@
 import type{Asession}from"@/lib/ts"
 import{UserList}from"@/components/UserList"
-import{Amsg}from"./Amsg"
+import{ChatHistory,RealTime,type fta}from"./_use_client"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -23,25 +23,15 @@ export function ChatHeader({title,ava}:{
 
 
 /** `i#main-chat` */
-export function MainChat({s,chatWith}:{s:Asession,chatWith:string}){
-  // TODO
+export function MainChat({s,chatWith:to}:{s:Asession,chatWith:string}){
+  const fta:fta['fta']={
+    from:s.id,
+    to,
+    ava:s.ava,
+  }
   return<i id='main-chat'>
-    <Amsg data={{c:"me! woohooooooooo",dt:1725799900}}/>
-    <Amsg data={{c:"톡",dt:1725799900}}/>
-    <Amsg ava={s.ava} data={{c:"ruaaaa  iub ib lkj bkj hb kjh v kuh vkuv kuhv kuhv kjhv kj hvkj hvkj hvkjhbasdilhbv a aaaa aaa aaaa twrgfrga tr wrae aaa aa awefa ",dt:1725799923}}/>
-    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
-    <Amsg ava={s.ava} data={{c:`chat as ${s.name}\nwith ${chatWith}`,dt:1725772333}}/>
-    <Amsg data={{c:"me! test",dt:1725799900}}/>
-    <Amsg ava={s.ava} data={{c:"blahblah",dt:172577233}}/>
-    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
-    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
-    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
-    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
-    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
-    <Amsg ava={s.ava} data={{c:"b",dt:1725772333}}/>
-    <Amsg ava={s.ava} data={{c:"blahblah",dt:1725772333}}/>
-    <Amsg data={{c:"bruh",dt:1725772333}}/>
-    <Amsg ava={s.ava} data={{c:"lol",dt:1725772333}}/>
+    <ChatHistory fta={fta}/>
+    <RealTime fta={fta}/>
   </i>
 }
 

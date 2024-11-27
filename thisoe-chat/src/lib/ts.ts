@@ -29,6 +29,7 @@ export type Auser = {
 }
 
 export type Chat = {
+    _id?:ObjectId
   /** sender */
     e1:string
   /**
@@ -42,6 +43,12 @@ export type Chat = {
     read:boolean
   /** unix timestamp */
     dt:number
+}
+
+export type SSEdata={
+  itsMe:boolean
+  dt:number
+  c:string
 }
 
 // chat action func

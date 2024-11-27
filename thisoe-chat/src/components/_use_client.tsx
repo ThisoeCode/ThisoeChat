@@ -1,8 +1,11 @@
 'use client'
 import{put}from"./_use_server"
-import{useState,type KeyboardEvent as K}from"react"
+import{Fragment,useEffect,useState,type KeyboardEvent as K}from"react"
 import type{Asession,chatData,chatID}from"@/lib/ts"
+import useSSE from "@/hooks/useThisoeChatSSE"
+import{Amsg}from"./Amsg"
 
+export type fta = {fta:{from:string,to:string,ava:string}}
 
 const // lib
   servAlert=(SERV_ID:string)=>alert(`The server ran into an unexpected error.\nPlease contact Thisoe with the error ID: ${SERV_ID}`)
@@ -28,7 +31,7 @@ SignInBtn = ({provider}:{provider:string})=>{
 },
 
 
-// 2. history back
+// 2. window.history.back button
 BackBtn = ()=>{
   return<button onClick={()=>window.history.back()}><i className="back svg"/></button>
 },
@@ -36,8 +39,8 @@ BackBtn = ()=>{
 
 // 3. send chat form
 /** `#prompt` */
-ChatForm = ({send,IDs}:{
-  send: (data:chatData,IDs:chatID)=>ReturnType<typeof put>
+ChatForm = ({sendF,IDs}:{
+  sendF: (data:chatData,IDs:chatID)=>ReturnType<typeof put>
   IDs:chatID
 })=>{
   const
@@ -46,7 +49,7 @@ ChatForm = ({send,IDs}:{
     action=async()=>{
       if(!!c){
         sending(true)
-        const res = await send({c},IDs)
+        const res = await sendF({c},IDs)
         if(res.ok){
           setc('')
           sending(false)
@@ -70,19 +73,54 @@ ChatForm = ({send,IDs}:{
 },
 
 
-// 4. `/settings`
+// 4. chat SSE
+RealTime=({fta}:fta)=>{
+  const
+    {from,to,ava}=fta,
+    {flush}=useSSE(
+      process.env.NEXT_PUBLIC_SELF_URL!
+        + `/api/sse/${from}/${to}`
+    ),
+    msgs:JSX.Element[]=[],
+    [key,setKey]=useState(0)
+
+  useEffect(()=>{
+    if(flush)
+      msgs.push(<Amsg data={flush}ava={ava} key={'RT'+key}/>)
+    setKey(key+1)
+  },[flush])
+
+  return<>{msgs}</>
+},
+
+
+// 5. chat history
+ChatHistory=({fta}:fta)=>{
+  // TODO fetch history
+  const
+    {from,to,ava}=fta,
+    list:JSX.Element[] = []
+  list.push(<Fragment key={crypto.randomUUID()}>{(from+to+ava).length}</Fragment>)
+
+  return<>
+    {list}
+    <button style={{display:'none'}}>Show More History</button>
+  </>
+},
+
+
+// 6. `/settings`
 /** `i#proform` */
 ProfileSettings = ({s}:{s:Asession})=>{
   const
     [currObj,setObj]=useState({uid:s.id,uname:s.name}),
     [uid,modUid]=useState(s.id),
     [uname,modUname]=useState(s.name),
-    // [ustat,modUstat]=useState(us.ustat),
-    [saving,isSaving]=useState(false),
+    [isSaving,saving]=useState(false),
     save=async()=>{
       if(uid===currObj.uid&&uname===currObj.uname)
         return console.warn('[THISOE_WARNING] #proform:UNCHANGED')
-      isSaving(true)
+      saving(true)
       const
         submit={uid,uname,e:s.e,isIDchange:!(uid===currObj.uid)},
         ret = await put('settings',submit)
@@ -104,7 +142,7 @@ ProfileSettings = ({s}:{s:Asession})=>{
       else{
         servAlert(ret.SERV_ID||'SERVERIDGENERATEFAIL')
       }
-      isSaving(false)
+      saving(false)
     },
     revoke=()=>{
       if(confirm(
@@ -114,7 +152,7 @@ ProfileSettings = ({s}:{s:Asession})=>{
         modUname(currObj.uname)
       }
     },
-    btnDisable = saving||(currObj.uid===uid && currObj.uname===uname)
+    btnDisable = isSaving||(currObj.uid===uid && currObj.uname===uname)
   return<i id="proform">
     <label>
       <p>Display Name:&nbsp;</p>

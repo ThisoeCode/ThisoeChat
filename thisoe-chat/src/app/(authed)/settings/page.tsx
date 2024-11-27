@@ -1,6 +1,6 @@
 import{ProfileSettings,BackBtn}from"@/components/_use_client"
 import{signOut}from"@/lib/auth"
-import{session}from"@/lib/lib"
+import{session}from"@/lib/server"
 import Image from "next/image"
 
 export default async function _(){

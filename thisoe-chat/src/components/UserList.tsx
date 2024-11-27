@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import{API}from"@/lib/lib"
+import{API}from"@/lib/server"
 import type{Asession,Auser}from"@/lib/ts"
 
 export const
@@ -10,12 +10,13 @@ UserList =async({selfID}:{selfID:string})=>{
   const
     {list,/* prev */}:{list:Auser[],prev:number} =
       await(await fetch(API+'list/users/0')).json(),
-    cards:Promise<JSX.Element>[]=[]
+    cards:JSX.Element[]=[]
 
   // render
   list.forEach(({uid,uname,ava})=>{
-    if(uid!==selfID)
-      cards.push(UserCard({id:uid,name:uname,ava}))
+    if(uid!==selfID) cards.push(
+      <UserCard id={uid}name={uname}ava={ava}key={'UC'+uid}/>
+    )
   })
 
   // TODO: make pinned users list
@@ -29,7 +30,7 @@ UserList =async({selfID}:{selfID:string})=>{
 },
 
 /** `nav a` */
-UserCard =async({id,name,ava}:Partial<Asession>)=>{
+UserCard =({id,name,ava}:Partial<Asession>)=>{
   return<Link href={'/chat/'+id} title={name+'\n@'+id}>
     <Image className="ava"
       alt={name+"'s avatar"}

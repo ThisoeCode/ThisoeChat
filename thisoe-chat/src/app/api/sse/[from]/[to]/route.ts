@@ -1,12 +1,15 @@
 import{NextResponse}from'next/server'
 import{mainDB}from'@/lib/_insu'
-import{Thisoe}from'@/lib/ts'
+import type{Chat,SSEdata}from'@/lib/ts'
 
-export async function GET(req:Request){
+export async function GET(req:Request,{params}:{
+  params:Promise<{from:string,to:string}>,
+}){
   const
+    {from,to}=await params,
     {readable,writable} = new TransformStream(),
     writer = writable.getWriter(),
-    data=(_:Thisoe)=>`data: ${_}\n\n`
+    data=(_:SSEdata)=>`data: ${JSON.stringify(_)}\n\n`
   writer.write('SSE_OPEN')
 
   try{
@@ -19,9 +22,21 @@ export async function GET(req:Request){
 
     req.signal.addEventListener('abort',abort)
 
-    cs.on('change',(change:{fullDocument:{[_:string]:Thisoe}})=>{
+    cs.on('change',(change:{fullDocument:Chat})=>{
       if(req.signal.aborted)return;
-      writer.write(data(change.fullDocument.c))
+      const doc=change.fullDocument
+      if(doc.e2===from&&doc.e1===to)
+        writer.write(data({
+          itsMe:true,
+          dt:doc.dt,
+          c:doc.c,
+        }))
+      if(doc.e2===to&&doc.e1===from)
+        writer.write(data({
+          itsMe:false,
+          dt:doc.dt,
+          c:doc.c,
+        }))
     })
 
     // sweep
@@ -30,7 +45,7 @@ export async function GET(req:Request){
       req.signal.removeEventListener('abort',abort)
     })
   }catch(e){
-    writer.write(data(`UNEXPECTED_SSE_ERROR ${e}`))
+    writer.write(`data: UNEXPECTED_SSE_ERROR ${e}\n\n`)
     console.error('[THISOE ERR] SSE ERROR unexpected::'+e)
     writer.close()
   }

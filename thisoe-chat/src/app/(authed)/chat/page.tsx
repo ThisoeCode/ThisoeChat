@@ -1,5 +1,5 @@
 import{UserList}from"@/components/UserList"
-import{session}from"@/lib/lib"
+import{session}from"@/lib/server"
 import Image from "next/image"
 import Link from "next/link"
 

@@ -3,7 +3,7 @@ import Google from "next-auth/providers/google"
 import{Provider}from"next-auth/providers"
 import{MongoDBAdapter}from"@auth/mongodb-adapter"
 import{con,userDB}from"./_insu"
-import{suDb}from"./lib"
+import{suDb}from"./server"
 import type{Auser}from"./ts"
 
 const providers:Provider[]=[

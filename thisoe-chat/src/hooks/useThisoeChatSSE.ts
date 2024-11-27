@@ -1,26 +1,32 @@
-import{useState}from"react"
+import{useState,useEffect}from"react"
+import type{SSEdata}from"@/lib/ts"
 
 // TODO add param to pass in sender/receiver's ID
 
-export default function useThisoeChatSSE(){
+export default function useSSE(
+  url:string,
+  defaultOpen:boolean=true,
+){
   const
-    [sse,setSSE]=useState<EventSource |null>(null),
-    selfURL=process.env.NEXT_PUBLIC_SELF_URL!,
+    [sse,setSSE]=useState<EventSource|null>(null),
     [haisin,setHS]=useState(false),
+    [flush,setFlush]=useState<SSEdata|null>(null),
     open=()=>{
-      const newsse = new EventSource(selfURL+'/api/sse')
+      if(sse)return;
+
+      const newsse = new EventSource(url)
       setSSE(newsse)
       setHS(true)
 
       newsse.onmessage = (e)=>{
-        alert(e.data)
+        setFlush(JSON.parse(e.data))
       }
 
       newsse.onerror = ()=>{
-        alert('SSE stream error!')
         newsse.close()
         setSSE(null)
         setHS(false)
+        alert('SSE stream error! Please contact Thisoe with message "SSE_ERR".\n')
       }
     },
     close=()=>{
@@ -30,5 +36,18 @@ export default function useThisoeChatSSE(){
     },
     toggle=()=>haisin?open():close()
 
-  return{sse,open,close,toggle,isStreaming:haisin}
+  // default
+  useEffect(()=>{
+    if(defaultOpen)open()
+  },[defaultOpen])
+
+  return{
+    flush,open,
+    ctrl:{
+      open,
+      close,
+      toggle,
+      isStreaming:haisin,
+    },
+  }
 }

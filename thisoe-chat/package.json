@@ -1,9 +1,9 @@
 {
   "name": "thisoe-chat",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

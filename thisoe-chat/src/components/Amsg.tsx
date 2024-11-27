@@ -1,11 +1,9 @@
-import{unixToDate}from"@/lib/lib"
 import Image from "next/image"
+import{unixToDate}from"@/lib/client"
+import type{SSEdata}from"@/lib/ts"
 
 /** `i#amsg` */
-export function Amsg({data,ava}:{ava?:string,data:{
-  dt:number,
-  c:string,
-}}){
+export function Amsg({data,ava}:{ava?:string,data:SSEdata}){
   const
     // display time
     t=unixToDate(data.dt),
@@ -17,7 +15,7 @@ export function Amsg({data,ava}:{ava?:string,data:{
       : now.mo!==t.mo&&now.d!==t.d ? time+date
         : time
 
-  return<i className={ava?"amsg":"amsg me"}>
+  return<i className={data.itsMe?"amsg":"amsg me"}>
     {ava&&
       <Image className="ava"
         alt="avatar" src={ava}

@@ -1,5 +1,5 @@
 'use server'
-import{API}from"@/lib/lib"
+import{API}from"@/lib/server"
 import type{Aobj}from"@/lib/ts"
 
 export const
