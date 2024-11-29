@@ -81,12 +81,14 @@ RealTime=({fta}:fta)=>{
       process.env.NEXT_PUBLIC_SELF_URL!
         + `/api/sse/${from}/${to}`
     ),
-    msgs:JSX.Element[]=[],
+    [msgs,setMsg]=useState<JSX.Element[]>([]),
     [key,setKey]=useState(0)
 
   useEffect(()=>{
-    if(flush)
-      msgs.push(<Amsg data={flush}ava={ava} key={'RT'+key}/>)
+    if(flush) setMsg([
+      <Amsg data={flush}ava={ava} key={'RT'+key}/>
+    ,...msgs])
+    console.dir(flush)
     setKey(key+1)
   },[flush])
 
@@ -100,7 +102,7 @@ ChatHistory=({fta}:fta)=>{
   const
     {from,to,ava}=fta,
     list:JSX.Element[] = []
-  list.push(<Fragment key={crypto.randomUUID()}>{(from+to+ava).length}</Fragment>)
+  list.push(<Fragment key={crypto.randomUUID()}>SHOW MORE CHAT HISTORY {(from+to+ava).length}</Fragment>)
 
   return<>
     {list}

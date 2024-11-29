@@ -28,6 +28,7 @@ export type Auser = {
   pin: string[]
 }
 
+import type{ObjectId}from"mongodb"
 export type Chat = {
     _id?:ObjectId
   /** sender */
@@ -58,15 +59,15 @@ export type chatData = {c:string}
 
 
 // DEV TYPES
-import type{ObjectId,WithId,WithoutId}from"mongodb"
+import type{WithId,WithoutId}from"mongodb"
 import type{NextRequest}from"next/server"
-/** A preparation of everything type. */
+/** A preparation of the Everything Type `Thisoe`. */
 export type preThisoe =
 string|number|boolean|undefined|null|
 Date|Error|NextRequest|React.ReactNode|
 WithId<Document>|WithoutId<Document>|ObjectId|
-Promise<preThisoe>|preThisoe[]|
-(()=>preThisoe)
-/** An everything type. */
+Promise<preThisoe>|preThisoe[]|(()=>preThisoe)|
+Chat|chatID|chatData|Asession|Auser|SSEdata|Aobj
+/** The Everything Type */
 export type Thisoe = preThisoe|{[_:string]:preThisoe}|Readonly<preThisoe>
 export type Aobj = {[_:string]:Thisoe}

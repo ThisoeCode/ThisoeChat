@@ -5,7 +5,7 @@ TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone,
 
 unixToDate=($uts:number)=>{
   const
-    dt = new Date($uts*1000),
+    dt = new Date($uts),
     months=['Jan.','Feb.','Mar.','Apr.','May','June','July','Aug.','Sep.','Oct.','Nov.','Dec.'],
     dig2=(_:number)=>{
       const n=_+''

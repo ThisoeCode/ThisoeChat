@@ -1,4 +1,5 @@
-# Thisoe ignores
 .vscode/
-TODO
 *.txt
+
+thisoe-chat/src/app/test/
+thisoe-chat/src/app/api/test/

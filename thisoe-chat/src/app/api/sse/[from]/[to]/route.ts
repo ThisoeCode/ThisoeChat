@@ -1,5 +1,6 @@
 import{NextResponse}from'next/server'
-import{mainDB}from'@/lib/_insu'
+import{mainDB,userDB}from'@/lib/_insu'
+import{NJ}from'@/lib/logsys'
 import type{Chat,SSEdata}from'@/lib/ts'
 
 export async function GET(req:Request,{params}:{
@@ -14,29 +15,44 @@ export async function GET(req:Request,{params}:{
 
   try{
     const
+      getE=async(uid:string)=>
+        (await userDB.findOne(
+          {uid},
+          {projection:{_id:0,e:1}}
+        )as {e:string}|null)?.e,
+      e1=await getE(from),
+      e2=await getE(to),
+
       cs = mainDB.watch(),
       abort=()=>{
         cs.close()
         writer.close()
       }
 
+    if(!e1||!e2){
+      abort()
+      return NJ({error:'[WARNING:４２２] THISOECHAT_SSE_AUTH_BAD_REQ'},422)
+    }
+
     req.signal.addEventListener('abort',abort)
 
-    cs.on('change',(change:{fullDocument:Chat})=>{
+    cs.on('change',(change:{fullDocument:Chat,operationType:string})=>{
       if(req.signal.aborted)return;
       const doc=change.fullDocument
-      if(doc.e2===from&&doc.e1===to)
-        writer.write(data({
-          itsMe:true,
-          dt:doc.dt,
-          c:doc.c,
-        }))
-      if(doc.e2===to&&doc.e1===from)
-        writer.write(data({
-          itsMe:false,
-          dt:doc.dt,
-          c:doc.c,
-        }))
+      if(change.operationType==='insert'){
+        if(doc.e2===e1&&doc.e1===e2)
+          writer.write(data({
+            itsMe:true,
+            dt:doc.dt,
+            c:doc.c,
+          }))
+        if(doc.e2===e2&&doc.e1===e1)
+          writer.write(data({
+            itsMe:false,
+            dt:doc.dt,
+            c:doc.c,
+          }))
+      }
     })
 
     // sweep
