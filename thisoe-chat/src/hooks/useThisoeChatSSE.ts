@@ -16,13 +16,15 @@ export default function useSSE(
       setSSE(newsse)
       setHS(true)
 
-      newsse.onmessage=e=>setFlush(JSON.parse(e.data))
+      newsse.onmessage=e=>{
+        console.log(e.data)
+        setFlush(JSON.parse(e.data))
+      }
 
-      newsse.onerror = ()=>{
+      newsse.onerror=()=>{
         newsse.close()
         setSSE(null)
         setHS(false)
-        alert('An error occurred while receiving chat message.\nPlease contact Thisoe with message "SSE_ERR_1".')
       }
     },
     close=()=>{
@@ -32,14 +34,14 @@ export default function useSSE(
     },
     toggle=()=>haisin?open():close()
 
-  // default
+  // mount default
   useEffect(()=>{
     if(defaultOpen)open()
     return close
   },[])
 
   return{
-    flush,open,
+    flush, open,
     ctrl:{
       open,
       close,

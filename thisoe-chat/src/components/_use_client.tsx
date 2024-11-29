@@ -88,7 +88,6 @@ RealTime=({fta}:fta)=>{
     if(flush) setMsg([
       <Amsg data={flush}ava={ava} key={'RT'+key}/>
     ,...msgs])
-    console.dir(flush)
     setKey(key+1)
   },[flush])
 

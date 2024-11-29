@@ -7,8 +7,12 @@ export async function PUT(req:NextRequest,{params}:{params:Promise<{from:string,
   const
     {from,to}=await params,
     {c} = await req.json(),
-    [e1,e2]=
-      (await userDB.find({uid:{$in:[from,to]}}).toArray())
+    [e1,e2]= // sort (order) by uid
+      (await userDB.aggregate([
+        {$match: {uid: {$in: [from,to] }}},
+        {$addFields: {i: {$indexOfArray: [[from,to],"$uid"] }}},
+        {$sort:{i:1}}
+      ]).toArray())
       .map(_=>_.e),
     obj:Chat={e1,e2,c,read:false,dt:Math.floor(Date.now())}
 
