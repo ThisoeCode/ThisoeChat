@@ -15,7 +15,7 @@ export type Auser = {
  * Signed-up timestamp (milliseconds since Nov 01 2024)
  * - type `int64`
  */
-  su: {$numberLong:string} | number
+  su: number
 /** email: reference to Authjs user */
   e: string
   uid: string

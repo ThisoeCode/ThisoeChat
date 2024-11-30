@@ -17,7 +17,7 @@ export const
 /** The base number of `Auser.su` */
 su_=1730386800000,
 suDb=(unixMs:number=Date.now()-su_)=>{
-  return{$numberLong:(unixMs)+''}
+  return unixMs
 },
 
 bigAva = (url:string|null|undefined)=>{
