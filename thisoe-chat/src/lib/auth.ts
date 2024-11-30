@@ -26,7 +26,7 @@ export const{handlers,auth,signIn,signOut}=NextAuth({
   session:{strategy:"jwt"},
   callbacks:{
     async signIn({user}){
-      const auser = await userDB.findOne({e:user.email})
+      const auser = await userDB.findOne({e:user.email?.split('@')[0]})
       if(!auser&&user.email&&user.id&&user.name){
         const aNewUser:Auser = {
           su:suDb(),
