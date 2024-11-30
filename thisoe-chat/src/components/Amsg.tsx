@@ -3,7 +3,7 @@ import{unixToDate}from"@/lib/client"
 import type{SSEdata}from"@/lib/ts"
 
 /** `i#amsg` */
-export function Amsg({data,ava}:{ava?:string,data:SSEdata|null}){
+export function Amsg({data,ava}:{data:SSEdata|null,ava:string}){
   if(!data)return<></>
   const
     // display time
@@ -15,17 +15,14 @@ export function Amsg({data,ava}:{ava?:string,data:SSEdata|null}){
     displayTime = now.yr!==t.yr ? time+date+yr
       : now.mo!==t.mo&&now.d!==t.d ? time+date
         : time
-  console.dir({t,now})
 
   return<i className={data.itsMe?"amsg me":"amsg"}>
-    {ava&&
-      <Image className="ava"
-        alt="avatar" src={ava}
-        width={30} height={30}
-      />
-    }
+    <Image className="ava"
+      src={ava} alt="avatar"
+      width={30} height={30}
+    />
     <i className="p">
-      <p>{data.c.replace(/ /g,'\u00a0')}</p>
+      <p>{data.c}</p>
       <span>{displayTime}</span>
     </i>
   </i>

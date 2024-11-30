@@ -13,7 +13,7 @@ export async function GET(req:Request,{params}:{
     data=(_:SSEdata)=>`data: ${JSON.stringify(_)}\n\n`
 
   try{
-    console.log(' === SSE API TRYING TO OPEN === ') // TODO DELETE
+    // console.log(' === SSE API TRYING TO OPEN === ') // TODO DELETELINE
     const
       getE=async(uid:string)=>
         (await userDB.findOne(
@@ -25,7 +25,7 @@ export async function GET(req:Request,{params}:{
 
       cs = mainDB.watch(),
       abort=()=>{
-        console.log(' === API SSE ABORTING === ') // TODO DELETE
+        // console.log(' === API SSE ABORTING === ') // TODO DELETELINE
         cs.close()
         writer.close()
       }
@@ -38,12 +38,12 @@ export async function GET(req:Request,{params}:{
     req.signal.addEventListener('abort',abort)
 
     cs.on('change',(change:{fullDocument:Chat,operationType:string})=>{
-      console.log(' === SSE NEW CHANGE === ') // TODO DELETE
+      // console.log(' === SSE NEW CHANGE === ') // TODO DELETELINE
       if(req.signal.aborted)return;
       const doc=change.fullDocument
       if(change.operationType==='insert'){
-        console.log(`     FROM ${doc.e1} TO ${doc.e2}\n     ${doc.c}`) // TODO DELETE
-        console.dir({e1,e2,doc:{e1:doc.e1,e2:doc.e2},itsmeFalse:doc.e2===e1&&doc.e1===e2,itsmeTrue:doc.e2===e2&&doc.e1===e1}) // TODO DELETE
+        // console.log(`     FROM ${doc.e1} TO ${doc.e2}\n     ${doc.c}`) // TODO DELETELINE
+        // console.dir({e1,e2,doc:{e1:doc.e1,e2:doc.e2},itsmeFalse:doc.e2===e1&&doc.e1===e2,itsmeTrue:doc.e2===e2&&doc.e1===e1}) // TODO DELETELINE
         if(doc.e2===e2&&doc.e1===e1)
           writer.write(data({
             itsMe:true,

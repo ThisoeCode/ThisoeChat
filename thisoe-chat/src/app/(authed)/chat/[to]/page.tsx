@@ -22,7 +22,7 @@ export default async function _({params}:prop){
   return<i id="chat">
     <Aside s={s}/>
     <main className="chat-bg">
-      <ChatHeader title={'w/ '+s.name}ava={s.ava}/>
+      <ChatHeader title={'w/'+s.name}ava={s.ava}/>
       <MainChat s={s}chatWith={to}/>
       <ChatForm sendF={action} IDs={{from:s.id,to}}/>
     </main>

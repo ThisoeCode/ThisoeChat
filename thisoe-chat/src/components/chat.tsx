@@ -1,8 +1,9 @@
-import type{Asession}from"@/lib/ts"
 import{UserList}from"@/components/UserList"
 import{ChatHistory,RealTime,type fta}from"./_use_client"
+import{userDB}from"@/lib/_insu"
 import Image from "next/image"
 import Link from "next/link"
+import type{Asession}from"@/lib/ts"
 
 /** `header` */
 export function ChatHeader({title,ava}:{
@@ -23,15 +24,17 @@ export function ChatHeader({title,ava}:{
 
 
 /** `i#main-chat` */
-export function MainChat({s,chatWith:to}:{s:Asession,chatWith:string}){
-  const fta:fta['fta']={
-    from:s.id,
-    to,
-    ava:s.ava,
-  }
+export async function MainChat({s,chatWith:to}:{s:Asession,chatWith:string}){
+  const
+    toava=await userDB.findOne({uid:to},{projection:{_id:0,ava:1}}),
+    fta:fta['fta']={
+      from:s.id,
+      to,
+      ava:{from:s.ava,to:toava?.ava||'/favicon.ico'},
+    }
   return<i id='main-chat'>
-    <ChatHistory fta={fta}/>
     <RealTime fta={fta}/>
+    <ChatHistory fta={fta}/>
   </i>
 }
 

@@ -187,6 +187,7 @@ main{
   flex:1;
   margin:0;
   height:calc(100vh - 81px); height:calc(100dvh - 81px);
+  overflow:hidden;
 }
 /* header config: for phone */
 #menu,#s-phone{pointer-events:none}
@@ -195,12 +196,12 @@ main{
 #main-chat{
   flex:1;
   flex-direction:column-reverse;
-  gap:9pt;
+  gap:7pt;
   width:100%;
   height:calc(100vh - 81px - 30pt);
   margin:0 auto;
   padding:9pt 0;
-  overflow-y:scroll;
+  overflow-y:auto;
 }
 .amsg{
   padding:0 30pt 0 9pt;
@@ -208,13 +209,14 @@ main{
 .amsg .p{
   margin:0 0 0 3pt;
   padding:7px 16pt 7px 9pt;
+  border:var(--thisoe) solid 3px;
   border-radius:0 18pt 18pt 18pt;
   background:var(--thisoe-faint-solid);
   font-size:18px;
-  white-space:pre-line;
+  white-space:normal;
 }
 .amsg.me{
-  justify-content:flex-end;
+  flex-direction:row-reverse;
   padding:0 9pt 0 30pt;
 }
 .amsg.me .p{
@@ -228,6 +230,7 @@ main{
   white-space:nowrap;
   transform:translateX(7px) translateY(1pt);
 }.amsg.me span{transform:translateX(9pt)}
+.amsg.me .ava{align-self:flex-end}
 
 #prompt{
   display:flex;

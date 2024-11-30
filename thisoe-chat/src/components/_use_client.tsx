@@ -1,11 +1,11 @@
 'use client'
 import{put}from"./_use_server"
-import{Fragment,useEffect,useState,type KeyboardEvent as K}from"react"
+import{Fragment,useEffect,useState,useRef,type KeyboardEvent as K}from"react"
 import type{Asession,chatData,chatID}from"@/lib/ts"
 import useSSE from "@/hooks/useThisoeChatSSE"
 import{Amsg}from"./Amsg"
 
-export type fta = {fta:{from:string,to:string,ava:string}}
+export type fta = {fta:{from:string,to:string,ava:{from:string,to:string}}}
 
 const // lib
   servAlert=(SERV_ID:string)=>alert(`The server ran into an unexpected error.\nPlease contact Thisoe with the error ID: ${SERV_ID}`)
@@ -46,6 +46,7 @@ ChatForm = ({sendF,IDs}:{
   const
     [c,setc]=useState(''),
     [disable,sending]=useState(false),
+    inputRef=useRef<HTMLInputElement>(null),
     action=async()=>{
       if(!!c){
         sending(true)
@@ -56,6 +57,11 @@ ChatForm = ({sendF,IDs}:{
         }
       }
     }
+
+  useEffect(()=>{
+    if(inputRef.current&&!disable)inputRef.current.focus()
+  },[disable])
+
   return<i id="prompt">
     <input value={c}
       onChange={(_)=>setc(_.target.value)}
@@ -63,7 +69,8 @@ ChatForm = ({sendF,IDs}:{
       onKeyDown={({key}:K<HTMLInputElement>)=>{
         if(key==='Enter')action()
       }}
-      autoComplete="off" required
+      autoComplete="off"required
+      ref={inputRef}autoFocus
     />
     <button
       onClick={action}
@@ -81,14 +88,12 @@ RealTime=({fta}:fta)=>{
       process.env.NEXT_PUBLIC_SELF_URL!
         + `/api/sse/${from}/${to}`
     ),
-    [msgs,setMsg]=useState<JSX.Element[]>([]),
-    [key,setKey]=useState(0)
+    [msgs,setMsg]=useState<JSX.Element[]>([])
 
   useEffect(()=>{
     if(flush) setMsg([
-      <Amsg data={flush}ava={ava} key={'RT'+key}/>
+      <Amsg data={flush}ava={flush.itsMe?ava.from:ava.to} key={'RT'+crypto.randomUUID().slice(24)}/>
     ,...msgs])
-    setKey(key+1)
   },[flush])
 
   return<>{msgs}</>
@@ -97,14 +102,15 @@ RealTime=({fta}:fta)=>{
 
 // 5. chat history
 ChatHistory=({fta}:fta)=>{
+
   // TODO fetch history
   const
     {from,to,ava}=fta,
     list:JSX.Element[] = []
-  list.push(<Fragment key={crypto.randomUUID()}>SHOW MORE CHAT HISTORY {(from+to+ava).length}</Fragment>)
+  list.push(<Fragment key={'CH'+crypto.randomUUID().slice(27)}>SHOW MORE CHAT HISTORY {(from+to+ava.from).length}</Fragment>)
 
   return<>
-    {list}
+    {/* {list} */}
     <button style={{display:'none'}}>Show More History</button>
   </>
 },

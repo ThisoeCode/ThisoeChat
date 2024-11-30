@@ -16,10 +16,7 @@ export default function useSSE(
       setSSE(newsse)
       setHS(true)
 
-      newsse.onmessage=e=>{
-        console.log(e.data)
-        setFlush(JSON.parse(e.data))
-      }
+      newsse.onmessage=e=>setFlush(JSON.parse(e.data))
 
       newsse.onerror=()=>{
         newsse.close()
