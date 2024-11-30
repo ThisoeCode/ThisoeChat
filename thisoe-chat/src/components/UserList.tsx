@@ -10,7 +10,7 @@ UserList =async({selfID}:{selfID:string})=>{
   const
     {list,/* prev */}:{list:Auser[],prev:number} =
       await(await fetch(API+'list/users/0',{
-        next:{revalidate:2333}
+        // next:{revalidate:2333}
       })).json(),
     cards:JSX.Element[]=[]
 
