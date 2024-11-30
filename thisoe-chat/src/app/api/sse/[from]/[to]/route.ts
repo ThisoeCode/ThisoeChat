@@ -3,11 +3,6 @@ import{mainDB,userDB}from'@/lib/_insu'
 import{NJ}from'@/lib/logsys'
 import type{Chat,SSEdata}from'@/lib/ts'
 
-// TODO DELETE_IF_VERCEL_NOT_EDGING
-export const config = {
-  runtime: 'edge',
-}
-
 export async function GET(req:Request,{params}:{
   params:Promise<{from:string,to:string}>,
 }){
@@ -39,13 +34,6 @@ export async function GET(req:Request,{params}:{
       abort()
       return NJ({error:'[WARNING:４２２] THISOECHAT_SSE_AUTH_BAD_REQ'},422)
     }
-
-    // TODO DELETE_IF_VERCEL_NOT_EDGING
-    setInterval(()=>{
-      if(!writer.closed){
-        writer.write(`:\n\n`)
-      }
-    }, 9999)
 
     req.signal.addEventListener('abort',abort)
 
