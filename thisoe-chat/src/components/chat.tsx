@@ -1,9 +1,11 @@
 import{UserList}from"@/components/UserList"
-import{ChatHistory,RealTime,type fta}from"./_use_client"
+import{RealTime,type fta}from"./_use_client"
 import{userDB}from"@/lib/_insu"
 import Image from "next/image"
 import Link from "next/link"
-import type{Asession}from"@/lib/ts"
+import{API}from"@/lib/server"
+import type{Asession,Chat}from"@/lib/ts"
+import{Amsg}from"./Amsg"
 
 /** `header` */
 export function ChatHeader({title,ava}:{
@@ -26,6 +28,25 @@ export function ChatHeader({title,ava}:{
 /** `i#main-chat` */
 export async function MainChat({s,chatWith:to}:{s:Asession,chatWith:string}){
   const
+  // chat history
+    ChatHistory=async({fta,me}:fta&{me:string})=>{
+      const
+        {from,to,ava}=fta,
+        {chats}:{chats:Chat[]}=await(await fetch(API+`get/${from}/${to}`)).json(),
+        list:JSX.Element[] = []
+      chats.forEach((v,i)=>{
+        const itsMe=v.e1===me
+        list.push(<Amsg
+          data={{c:v.c,dt:v.dt,itsMe}}
+          ava={itsMe?ava.from:ava.to}
+          key={'CH'+i}
+        />)
+      })
+      return<>
+        {list}
+        <button style={{display:'none'}}>Show More History</button>
+      </>
+    },
     toava=await userDB.findOne({uid:to},{projection:{_id:0,ava:1}}),
     fta:fta['fta']={
       from:s.id,
@@ -34,7 +55,7 @@ export async function MainChat({s,chatWith:to}:{s:Asession,chatWith:string}){
     }
   return<i id='main-chat'>
     <RealTime fta={fta}/>
-    <ChatHistory fta={fta}/>
+    <ChatHistory fta={fta}me={s.e}/>
   </i>
 }
 

@@ -1,5 +1,7 @@
 export const
 
+API = process.env.NEXT_PUBLIC_SELF_URL!+'/api/',
+
 /** Get visitor's timezone */
 TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone,
 

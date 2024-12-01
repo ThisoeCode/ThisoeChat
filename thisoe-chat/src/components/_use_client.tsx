@@ -1,9 +1,10 @@
 'use client'
 import{put}from"./_use_server"
 import{Fragment,useEffect,useState,useRef,type KeyboardEvent as K}from"react"
-import type{Asession,chatData,chatID}from"@/lib/ts"
 import useSSE from "@/hooks/useThisoeChatSSE"
 import{Amsg}from"./Amsg"
+import{API}from"@/lib/client"
+import type{Asession,chatData,chatID}from"@/lib/ts"
 
 export type fta = {fta:{from:string,to:string,ava:{from:string,to:string}}}
 
@@ -85,8 +86,8 @@ RealTime=({fta}:fta)=>{
   const
     {from,to,ava}=fta,
     {flush}=useSSE(
-      process.env.NEXT_PUBLIC_SELF_URL!
-        + `/api/sse/${from}/${to}`
+      API+(API.includes('localhost')?'':'vercel/')
+      +`sse/${from}/${to}`
     ),
     [msgs,setMsg]=useState<JSX.Element[]>([])
 
@@ -100,23 +101,7 @@ RealTime=({fta}:fta)=>{
 },
 
 
-// 5. chat history
-ChatHistory=({fta}:fta)=>{
-
-  // TODO fetch history
-  const
-    {from,to,ava}=fta,
-    list:JSX.Element[] = []
-  list.push(<Fragment key={'CH'+crypto.randomUUID().slice(27)}>SHOW MORE CHAT HISTORY {(from+to+ava.from).length}</Fragment>)
-
-  return<>
-    {/* {list} */}
-    <button style={{display:'none'}}>Show More History</button>
-  </>
-},
-
-
-// 6. `/settings`
+// 5. `/settings`
 /** `i#proform` */
 ProfileSettings = ({s}:{s:Asession})=>{
   const
