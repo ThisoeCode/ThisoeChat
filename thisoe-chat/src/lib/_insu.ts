@@ -25,9 +25,9 @@ export default async function insu(){
 }
 
 // Export COLLECTIONs
-const DB = async(isUsersData:boolean=false)=>{
+const DB = async(col:string)=>{
   const {db} = await insu()
-  return db.collection(isUsersData?DB_USER:DB_CLCT)
+  return db.collection(col)
 }
-export const mainDB = await DB()
-export const userDB = await DB(true)
+export const mainDB = await DB(DB_CLCT)
+export const userDB = await DB(DB_USER)

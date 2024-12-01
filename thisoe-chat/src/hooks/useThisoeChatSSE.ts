@@ -22,7 +22,6 @@ export default function useSSE(
         newsse.close()
         setSSE(null)
         setHS(false)
-        // TODO DELETE_IF_VERCEL_STILL_DIES
         setTimeout(open,999)
       }
     },

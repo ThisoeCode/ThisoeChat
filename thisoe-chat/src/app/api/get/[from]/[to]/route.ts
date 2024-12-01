@@ -20,6 +20,5 @@ export async function GET(_:Request,{params}:{
       .sort({dt:-1})
       .limit(30)
       .toArray() as Chat[]
-  console.dir({chats})
   return NJ({chats})
 }
