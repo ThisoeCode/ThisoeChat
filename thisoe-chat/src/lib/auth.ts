@@ -1,4 +1,4 @@
-import NextAuth from "next-auth"
+import NextAuth,{NextAuthConfig}from "next-auth"
 import Google from "next-auth/providers/google"
 import{Provider}from"next-auth/providers"
 import{MongoDBAdapter}from"@auth/mongodb-adapter"
@@ -10,15 +10,17 @@ const providers:Provider[]=[
   Google,
 ]
 
-export const providerMap = providers.map((provider)=>{
+export const
+
+providerMap = providers.map((provider)=>{
   if(typeof provider==="function"){
     const providerData = provider()
     return{id:providerData.id,name:providerData.name}
   }
   return{id:provider.id,name:provider.name}
-}).filter((provider)=>provider.id!=="credentials")
+}).filter((provider)=>provider.id!=="credentials"),
 
-export const{handlers,auth,signIn,signOut}=NextAuth({
+{handlers,auth,signIn,signOut} = NextAuth({
   providers,
   adapter:MongoDBAdapter(con,{
     databaseName:process.env.DB_AUTH,
@@ -41,4 +43,4 @@ export const{handlers,auth,signIn,signOut}=NextAuth({
       return true
     },
   },
-})
+}satisfies NextAuthConfig)

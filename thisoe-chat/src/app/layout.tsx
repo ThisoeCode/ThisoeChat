@@ -1,5 +1,6 @@
 import{Metadata}from"next"
 import"./thisoe.css"
+import{AP}from"@/components/_AuthProvider"
 
 export const metadata:Metadata={
   title: "Thisoe Chat!",
@@ -11,7 +12,7 @@ export default function RootLayout(
   {children}:Readonly<{children:React.ReactNode}>
 ){
   return<html lang="en"><body>
-    {children}
+    <AP>{children}</AP>
     <footer>
       <p>
         <a href="https://thisoe.dev/" target="_blank">Thisoe.dev</a> | <a href="https://thisoe.dev/project/">Showcase</a>

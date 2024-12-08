@@ -1,10 +1,11 @@
-import{NextRequest}from"next/server"
 import{NJ,servTitle as t}from"@/lib/logsys"
 import{userDB}from"@/lib/_insu"
+import{auth}from"@/lib/auth"
 
 const pro = 'SETTINGAPI'
 
-export async function PUT(req:NextRequest){t.t1(req)
+export const
+GET=auth(async(req)=>{if(req.auth?.user){
   const {e,uid,uname,isIDchange}:{
     e:string
     uid:string
@@ -33,4 +34,5 @@ export async function PUT(req:NextRequest){t.t1(req)
   if(res.modifiedCount===1)return NJ({},202)
   console.error(`[${t.t5+pro} 500] DBMODIFYFAIL`)
   return NJ({err:'DBMODIFYFAIL'},500)
-}
+} return NJ({err:'UNAUTHORIZED'},401)
+})
