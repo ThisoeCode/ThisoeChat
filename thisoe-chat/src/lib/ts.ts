@@ -52,10 +52,20 @@ export type SSEdata={
   c:string
 }
 
+export type SettingProfile = {
+  e:string
+  uid:string
+  uname:string
+  isIDchange:boolean
+}
+
 // chat action func
 export type chatID = {from:string,to:string}
 export type chatData = {c:string}
 
+
+import type{Awaitable}from"@auth/core/types"
+export type awaitable<_>=Awaitable<_>
 
 
 // DEV TYPES

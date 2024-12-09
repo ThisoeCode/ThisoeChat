@@ -3,8 +3,8 @@ import{RealTime,type fta}from"./_use_client"
 import{userDB}from"@/lib/_insu"
 import Image from "next/image"
 import Link from "next/link"
-import{API}from"@/lib/server"
-import type{Asession,Chat}from"@/lib/ts"
+import{retrieveHistory}from"@/lib/server"
+import type{Asession}from"@/lib/ts"
 import{Amsg}from"./Amsg"
 
 /** `header` */
@@ -32,7 +32,7 @@ export async function MainChat({s,chatWith:to}:{s:Asession,chatWith:string}){
     ChatHistory=async({fta,me}:fta&{me:string})=>{
       const
         {from,to,ava}=fta,
-        {chats}:{chats:Chat[]}=await(await fetch(API+`get/${from}/${to}`)).json(),
+        chats=await retrieveHistory({from,to}),
         list:JSX.Element[] = []
       chats.forEach((v,i)=>{
         const itsMe=v.e1===me

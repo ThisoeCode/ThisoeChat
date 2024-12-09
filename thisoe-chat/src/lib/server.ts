@@ -9,8 +9,8 @@ export const
 // 2. auth
 import{auth}from"@/lib/auth"
 import{redirect as r}from"next/navigation"
-import{userDB}from"./_insu"
-import type{Asession,Auser}from"./ts"
+import{mainDB,userDB}from"@/lib/_insu"
+import type{Asession,Auser, awaitable}from"./ts"
 
 export const
 
@@ -43,4 +43,27 @@ session =async(needRedirect:boolean=true)=>{
     e,id,name,recent,pin,
     ava:bigAva(img),
   }as Asession
+}
+
+// 3. retrieve history chat
+import type{Chat}from"@/lib/ts"
+export const retrieveHistory = async(
+  params:awaitable<{from:string,to:string}>
+)=>{
+  const
+    {from,to}=await params,
+    [d1,d2]=(await userDB
+      .find({uid:{$in:[from,to]}})
+      .project({_id:0,e:1})
+      .toArray()
+    ), e1=d1.e, e2=d2.e
+  return await mainDB
+      .find({$or:[
+        {$and:[{ e1 },{ e2 }]},
+        {$and:[{ e1:e2 },{ e2:e1 }]}
+      ]})
+      .project({_id:0})
+      .sort({dt:-1})
+      .limit(30)
+      .toArray() as Chat[]
 }

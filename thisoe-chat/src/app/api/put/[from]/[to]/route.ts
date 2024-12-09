@@ -7,10 +7,10 @@ import type{Chat}from"@/lib/ts"
 
 export const PUT=async(
   _:NextRequest,
-  context:{params:Promise<{from:string,to:string}>},
+  {params}:{params:Promise<{from:string,to:string}>},
 )=>{return auth(async(req)=>{if(req.auth?.user){
   const
-    {from,to}=await context.params,
+    {from,to}=await params,
     {c} = await req.json(),
     [e1,e2]= // sort (order) by uid
       (await userDB.aggregate([
@@ -25,4 +25,4 @@ export const PUT=async(
 
   return NJ({ok:1},201)
 } return NJ({ok:0},401)
-})(_,context)as Promise<Response>}
+})(_,{params:await params})as Promise<Response>}
